@@ -8,7 +8,7 @@
 #
 ####################################
 
-.data
+.data 
 
 	inFileName:	.asciz	"source.bmp"
 	outFileName:	.asciz	"dest.bmp"
@@ -17,10 +17,10 @@
 
 main:
 # open the file
-	li a7, 1024 	# system call for file_open
-	la a0, fname 	# address of filename string
-	li a1, 0 	# flags: 0-read file
-	ecall 		# file descriptor of opened file in a0
+	li a7, 1024 		# system call for file_open
+	la a0, inFileName 	# address of filename string
+	li a1, 0 		# flags: 0-read file
+	ecall 			# file descriptor of opened file in a0
 
 # save the file descriptor
 	mv s1, a0
