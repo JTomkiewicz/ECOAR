@@ -17,7 +17,10 @@
 	res:	.space 2
 	inFileName: .asciz "source.bmp"
 	outFileName: .asciz "dest.bmp"
-	image:	.space BMP_FILE_SIZE
+	image: .space BMP_FILE_SIZE
+	input: .space 80
+	prompt: .asciz "\nOnly numbers and dots are allowed. Other symbols will be ignored!\nInput: "
+	msgError: .asciz "\nSorry. Only numbers and dots are allowed."
 
 .text
 
@@ -26,10 +29,21 @@ main:
 # at first read file
 jal	read_bmp
 
+#display the input prompt
+	li a7, 4	# system call for print_string
+	la a0, prompt	# address of string 
+	ecall
+
+#read the input string
+	li a7, 8		# system call for read_string
+	la a0, input	# address of buffer    
+	li a1, 80		#max length
+	ecall
+
 # print 0	
-	li	a0, 2		#x
-	li	a1, 0		#y
-	li 	a2, 0x00000000	#color - 00RRGGBB
+	li	a0, 2		# x
+	li	a1, 0		# y
+	li 	a2, 0x00000000	# color - 00RRGGBB
 	jal	put_pixel
 		
 	li	a0, 3
