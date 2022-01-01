@@ -18,29 +18,54 @@
 	inFileName: .asciz "source.bmp"
 	outFileName: .asciz "dest.bmp"
 	image: .space BMP_FILE_SIZE
-	input: .space 80
-	prompt: .asciz "\nOnly numbers and dots are allowed. Other symbols will be ignored!\nInput: "
+	input1: .space 80
+	input2: .space 80
+	input3: .space 80
+	msg1: .asciz "\nOnly numbers and dots are allowed. Other symbols will be ignored!\nInput message to print: "
+	msg2: .asciz "\nInput starting x: "
+	msg3: .asciz "\nInput starting y: "
 
 .text
 
 main:
-
 	# at first read file
 	jal	read_bmp
 
-	# display the input prompt
+	# display the msg1
 	li a7, 4		# system call for print_string
-	la a0, prompt		# address of string 
+	la a0, msg1		# address of string 
 	ecall
 
-	# read the input string
+	# read the input1
 	li a7, 8		# system call for read_string
-	la a0, input		# address of buffer    
-	li a1, 80		#max length
+	la a0, input1		# address of buffer    
+	li a1, 80		# max length
 	ecall
 	
-	# modify your string here
-    	la a0, input 		# str = address of input buffer
+	# display the msg2
+	li a7, 4		
+	la a0, msg2		
+	ecall
+	
+	# read the input2
+	li a7, 8		
+	la a0, input2		    
+	li a1, 80		
+	ecall
+	
+	# display the msg3
+	li a7, 4		
+	la a0, msg3		
+	ecall
+	
+	# read the input3
+	li a7, 8		
+	la a0, input3		    
+	li a1, 80		
+	ecall
+	
+	# go to loop throught input1
+    	la a0, input1		# address of the buffer
     	jal goToLoop
 
 	# print 0	
@@ -247,12 +272,23 @@ goToLoop:
 #description: loop go throught text
 #arguments: a0 - address of 1st char of string
 #return: none
-    la a0, input 		# str = address of input buffer
+    la a0, input1 		# str = address of input buffer
 
 whileLoop:    
     lbu t1, (a0)		# *str - store char in t1
     
     beq t1, zero, pastWhile 	# zero register always contains 0 * str == '\0'
+    #beq t1, '0', drawZero
+    #beq t1, '1', drawOne
+    #beq t1, '2', drawTwo
+    #beq t1, '3', drawThree
+    #beq t1, '4', drawFour
+    #beq t1, '5', drawFive
+    #beq t1, '6', drawSix
+    #beq t1, '7', drawSeven
+    #beq t1, '8', drawEight
+    #beq t1, '9', drawNine
+    #beq t1, '.', drawDot
     addi a0, a0, 1 	     	# a0 = a0 + 1
     b whileLoop
     
