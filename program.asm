@@ -17,6 +17,7 @@
 	res:	.space 2
 	inFileName: .asciz "source.bmp"
 	outFileName: .asciz "dest.bmp"
+	image:	.space BMP_FILE_SIZE
 
 .text
 
@@ -141,7 +142,7 @@ read_bmp:
 	sw s1, 0(sp)
 #open file
 	li a7, 1024
-        la a0, fname		#file name 
+        la a0, inFileName	#file name 
         li a1, 0		#flags: 0-read file
         ecall
 	mv s1, a0      # save the file descriptor
@@ -171,7 +172,7 @@ save_bmp:
 	sw s1, (sp)
 #open file
 	li a7, 1024
-        la a0, fname		#file name 
+        la a0, outFileName		#file name 
         li a1, 1		#flags: 1-write file
         ecall
 	mv s1, a0      # save the file descriptor
