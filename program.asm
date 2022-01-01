@@ -39,6 +39,10 @@ jal	read_bmp
 	la a0, input	# address of buffer    
 	li a1, 80		#max length
 	ecall
+	
+#modify your string here
+    la a0, input 	# str = address of input buffer
+    jal goToLoop
 
 # print 0	
 	li	a0, 2		# x
@@ -212,8 +216,7 @@ save_bmp:
 
 # ============================================================================
 put_pixel:
-#description: 
-#	sets the color of specified pixel
+#description: sets the color of specified pixel
 #arguments: a0 - x coordinate, a1 - y coordinate, a2 - 0RGB - pixel color
 #return: none
 
@@ -240,3 +243,20 @@ put_pixel:
 	sb a2,2(t2)		#store R
 
 	jr ra
+	
+# ============================================================================
+goToLoop:
+#description: loop go throught text
+#arguments: a0 - address of 1st char of string
+#return: none
+    la a0, input 	# str = address of input buffer
+
+whileLoop:    
+    lbu t1, (a0)	# *str - store char in t1
+    
+    beq t1, zero, pastWhile # zero register always contains 0 * str == '\0'
+    addi a0, a0, 1 	     # a0 = a0 + 1
+    b whileLoop
+    
+pastWhile:
+    jr ra
