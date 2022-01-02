@@ -194,7 +194,8 @@ whileLoop:
     beq t5, s0, drawSix
     li s0, '7'
     beq t5, s0, drawSeven
-    #beq t5, s0, drawEight
+    li s0, '8'
+    beq t5, s0, drawEight
     #beq t5, s0, drawNine
     #beq t5, s0, drawDot
     addi a3, a3, 1 	     	# a0 = a0 + 1
@@ -1075,3 +1076,127 @@ drawSeven:
 	addi a3, a3, 1 	     	# a0 = a0 + 1
 	b whileLoop		# go back to while loop
 
+drawEight:
+# print 8	
+	li	a0, 1		# x
+	li	a1, 2		# y
+	li 	a2, 0x00000000	# color - 00RRGGBB
+	jal	put_pixel
+	
+	li	a0, 1		
+	li	a1, 1		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 2		
+	li	a1, 0		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 3		
+	li	a1, 0		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 4 		
+	li	a1, 0		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 5		
+	li	a1, 0		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 6		
+	li	a1, 1		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 6		
+	li	a1, 2		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 5		
+	li	a1, 3		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 4		
+	li	a1, 3		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 3		
+	li	a1, 3		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 2		
+	li	a1, 3	
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 2		
+	li	a1, 4		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 3		
+	li	a1, 4		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 4		
+	li	a1, 4		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 5		
+	li	a1, 4		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 6		
+	li	a1, 5		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 6		
+	li	a1, 6		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 5		
+	li	a1, 7		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 4		
+	li	a1, 7		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 3		
+	li	a1, 7		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 2	
+	li	a1, 7		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 1		
+	li	a1, 6		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 1		
+	li	a1, 5	
+	li 	a2, 0x00000000	
+	jal	put_pixel
+
+	addi a3, a3, 1 	     	# a0 = a0 + 1
+	b whileLoop		# go back to while loop
