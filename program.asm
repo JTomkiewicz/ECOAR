@@ -175,6 +175,7 @@ goToLoop:
     la a3, input1 		# str = address of input buffer
     li s0, '0'
     li s1, '1'
+    li s2, '2'
 
 whileLoop:    
     lbu t5, (a3)		# *str - store char in t1
@@ -182,7 +183,7 @@ whileLoop:
     beq t5, zero, pastWhile 	# zero register always contains 0 * str == '\0'
     beq t5, s0, drawZero
     beq t5, s1, drawOne
-    #beq t1, '2', drawTwo
+    beq t5, s2, drawTwo
     #beq t1, '3', drawThree
     #beq t1, '4', drawFour
     #beq t1, '5', drawFive
@@ -403,6 +404,107 @@ drawOne:
 	
 	li	a0, 2		
 	li	a1, 6		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	addi a3, a3, 1 	     	# a0 = a0 + 1
+	b whileLoop		# go back to while loop
+	
+# ============================================================================
+drawTwo:
+# print 2	
+	li	a0, 1		# x
+	li	a1, 5		# y
+	li 	a2, 0x00000000	# color - 00RRGGBB
+	jal	put_pixel
+	
+	li	a0, 1		
+	li	a1, 6		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 2		
+	li	a1, 7		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 3		
+	li	a1, 7		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 4		
+	li	a1, 7		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 5		
+	li	a1, 7		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 6		
+	li	a1, 6		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 5		
+	li	a1, 5		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 4		
+	li	a1, 4		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 3		
+	li	a1, 3		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 2		
+	li	a1, 2		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 1		
+	li	a1, 1		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 1		
+	li	a1, 0		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 2		
+	li	a1, 0		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 3		
+	li	a1, 0		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 4		
+	li	a1, 0		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 5		
+	li	a1, 0		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 6		
+	li	a1, 0		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 6		
+	li	a1, 1		
 	li 	a2, 0x00000000	
 	jal	put_pixel
 	
