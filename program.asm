@@ -64,7 +64,7 @@ main:
 	li a1, 80		
 	ecall
 	
-	# go to loop throught input1
+	# go to loop throught input1 string
     	la a0, input1		# address of the buffer
     	jal goToLoop
 
@@ -269,7 +269,7 @@ put_pixel:
 	
 # ============================================================================
 goToLoop:
-#description: loop go throught text
+#description: loop throught text
 #arguments: a0 - address of 1st char of string
 #return: none
     la a0, input1 		# str = address of input buffer
