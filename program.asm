@@ -65,110 +65,10 @@ main:
 	ecall
 	
 	# go to loop throught input1 string
-    	la a0, input1		# address of the buffer
-    	jal goToLoop
+    	la a3, input1		# address of the buffer
+    	j goToLoop
 
-	# print 0	
-	li	a0, 2		# x
-	li	a1, 0		# y
-	li 	a2, 0x00000000	# color - 00RRGGBB
-	jal	put_pixel
-		
-	li	a0, 3
-	li	a1, 0
-	li 	a2, 0x00000000
-	jal	put_pixel
-
-	li	a0, 4
-	li	a1, 0
-	li 	a2, 0x00000000
-	jal	put_pixel
-	
-	li	a0, 5
-	li	a1, 0
-	li 	a2, 0x00000000
-	jal	put_pixel
-	
-	li	a0, 6
-	li	a1, 1
-	li 	a2, 0x00000000
-	jal	put_pixel
-	
-	li	a0, 6
-	li	a1, 2
-	li 	a2, 0x00000000
-	jal	put_pixel
-	
-	li	a0, 6
-	li	a1, 3
-	li 	a2, 0x00000000
-	jal	put_pixel
-	
-	li	a0, 6
-	li	a1, 4
-	li 	a2, 0x00000000
-	jal	put_pixel
-	
-	li	a0, 6
-	li	a1, 5
-	li 	a2, 0x00000000
-	jal	put_pixel
-	
-	li	a0, 6
-	li	a1, 6
-	li 	a2, 0x00000000
-	jal	put_pixel
-	
-	li	a0, 5
-	li	a1, 7
-	li 	a2, 0x00000000
-	jal	put_pixel
-	
-	li	a0, 4
-	li	a1, 7
-	li 	a2, 0x00000000
-	jal	put_pixel
-	
-	li	a0, 3
-	li	a1, 7
-	li 	a2, 0x00000000
-	jal	put_pixel
-	
-	li	a0, 2
-	li	a1, 7
-	li 	a2, 0x00000000
-	jal	put_pixel
-	
-	li	a0, 1
-	li	a1, 6
-	li 	a2, 0x00000000
-	jal	put_pixel
-	
-	li	a0, 1
-	li	a1, 5
-	li 	a2, 0x00000000
-	jal	put_pixel
-	
-	li	a0, 1
-	li	a1, 4
-	li 	a2, 0x00000000
-	jal	put_pixel
-	
-	li	a0, 1
-	li	a1, 3
-	li 	a2, 0x00000000
-	jal	put_pixel
-	
-	li	a0, 1
-	li	a1, 2
-	li 	a2, 0x00000000
-	jal	put_pixel
-	
-	li	a0, 1
-	li	a1, 1
-	li 	a2, 0x00000000
-	jal	put_pixel
-
+saveAndExit:
 	# at the end save file
 	jal	save_bmp
 
@@ -272,13 +172,14 @@ goToLoop:
 #description: loop throught text
 #arguments: a0 - address of 1st char of string
 #return: none
-    la a0, input1 		# str = address of input buffer
+    la a3, input1 		# str = address of input buffer
+    li s0, '0'
 
 whileLoop:    
-    lbu t1, (a0)		# *str - store char in t1
+    lbu t5, (a3)		# *str - store char in t1
     
-    beq t1, zero, pastWhile 	# zero register always contains 0 * str == '\0'
-    #beq t1, '0', drawZero
+    beq t5, zero, pastWhile 	# zero register always contains 0 * str == '\0'
+    beq t5, s0, drawZero
     #beq t1, '1', drawOne
     #beq t1, '2', drawTwo
     #beq t1, '3', drawThree
@@ -289,8 +190,114 @@ whileLoop:
     #beq t1, '8', drawEight
     #beq t1, '9', drawNine
     #beq t1, '.', drawDot
-    addi a0, a0, 1 	     	# a0 = a0 + 1
+    addi a3, a3, 1 	     	# a0 = a0 + 1
     b whileLoop
     
 pastWhile:
-    jr ra
+    j saveAndExit
+
+# ============================================================================
+drawZero:
+# print 0	
+	li	a0, 2		# x
+	li	a1, 0		# y
+	li 	a2, 0x00000000	# color - 00RRGGBB
+	jal	put_pixel
+		
+	li	a0, 3
+	li	a1, 0
+	li 	a2, 0x00000000
+	jal	put_pixel
+
+	li	a0, 4
+	li	a1, 0
+	li 	a2, 0x00000000
+	jal	put_pixel
+	
+	li	a0, 5
+	li	a1, 0
+	li 	a2, 0x00000000
+	jal	put_pixel
+	
+	li	a0, 6
+	li	a1, 1
+	li 	a2, 0x00000000
+	jal	put_pixel
+	
+	li	a0, 6
+	li	a1, 2
+	li 	a2, 0x00000000
+	jal	put_pixel
+	
+	li	a0, 6
+	li	a1, 3
+	li 	a2, 0x00000000
+	jal	put_pixel
+	
+	li	a0, 6
+	li	a1, 4
+	li 	a2, 0x00000000
+	jal	put_pixel
+	
+	li	a0, 6
+	li	a1, 5
+	li 	a2, 0x00000000
+	jal	put_pixel
+	
+	li	a0, 6
+	li	a1, 6
+	li 	a2, 0x00000000
+	jal	put_pixel
+	
+	li	a0, 5
+	li	a1, 7
+	li 	a2, 0x00000000
+	jal	put_pixel
+	
+	li	a0, 4
+	li	a1, 7
+	li 	a2, 0x00000000
+	jal	put_pixel
+	
+	li	a0, 3
+	li	a1, 7
+	li 	a2, 0x00000000
+	jal	put_pixel
+	
+	li	a0, 2
+	li	a1, 7
+	li 	a2, 0x00000000
+	jal	put_pixel
+	
+	li	a0, 1
+	li	a1, 6
+	li 	a2, 0x00000000
+	jal	put_pixel
+	
+	li	a0, 1
+	li	a1, 5
+	li 	a2, 0x00000000
+	jal	put_pixel
+	
+	li	a0, 1
+	li	a1, 4
+	li 	a2, 0x00000000
+	jal	put_pixel
+	
+	li	a0, 1
+	li	a1, 3
+	li 	a2, 0x00000000
+	jal	put_pixel
+	
+	li	a0, 1
+	li	a1, 2
+	li 	a2, 0x00000000
+	jal	put_pixel
+	
+	li	a0, 1
+	li	a1, 1
+	li 	a2, 0x00000000
+	jal	put_pixel
+	
+	addi a3, a3, 1 	     	# a0 = a0 + 1
+	b whileLoop		# go back to while loop
