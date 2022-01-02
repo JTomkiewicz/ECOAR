@@ -186,7 +186,8 @@ whileLoop:
     beq t5, s0, drawTwo
     li s0, '3'
     beq t5, s0, drawThree
-    #beq t1, '4', drawFour
+    li s0, '4'
+    beq t5, s0, drawFour
     #beq t1, '5', drawFive
     #beq t1, '6', drawSix
     #beq t1, '7', drawSeven
@@ -652,6 +653,102 @@ drawThree:
 	
 	li	a0, 1		
 	li	a1, 6		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+
+	addi a3, a3, 1 	     	# a0 = a0 + 1
+	b whileLoop		# go back to while loop
+	
+# ============================================================================
+drawFour:
+# print 4	
+	li	a0, 5		# x
+	li	a1, 0		# y
+	li 	a2, 0x00000000	# color - 00RRGGBB
+	jal	put_pixel
+	
+	li	a0, 5		
+	li	a1, 1		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 5		
+	li	a1, 2	
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 5		
+	li	a1, 3		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 5		
+	li	a1, 4		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 5		
+	li	a1, 5		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 5		
+	li	a1, 6		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 5		
+	li	a1, 7		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 4		
+	li	a1, 6		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 3		
+	li	a1, 5		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 2		
+	li	a1, 4		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 1		
+	li	a1, 3		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 1		
+	li	a1, 2		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 2		
+	li	a1, 2		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 3		
+	li	a1, 2		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 4		
+	li	a1, 2		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 5		
+	li	a1, 2		
+	li 	a2, 0x00000000	
+	jal	put_pixel
+	
+	li	a0, 6		
+	li	a1, 2		
 	li 	a2, 0x00000000	
 	jal	put_pixel
 
