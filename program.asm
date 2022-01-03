@@ -309,7 +309,8 @@ drawZero:
 	li 	a2, 0x00000000
 	jal	put_pixel
 	
-	addi a3, a3, 1 	     	# a0 = a0 + 1
+	addi a3, a3, 1 	     	# next char from string
+	addi a5, a5, 8		# print next letter at x+8
 	b whileLoop		# go back to while loop
 	
 # ============================================================================
@@ -415,7 +416,8 @@ drawOne:
 	li 	a2, 0x00000000	
 	jal	put_pixel
 	
-	addi a3, a3, 1 	     	# a0 = a0 + 1
+	addi a3, a3, 1 	     	# next char from string
+	addi a5, a5, 8		# print next letter at x+8
 	b whileLoop		# go back to while loop
 	
 # ============================================================================
@@ -516,7 +518,8 @@ drawTwo:
 	li 	a2, 0x00000000	
 	jal	put_pixel
 	
-	addi a3, a3, 1 	     	# a0 = a0 + 1
+	addi a3, a3, 1 	     	# next char from string
+	addi a5, a5, 8		# print next letter at x+8
 	b whileLoop		# go back to while loop
 	
 # ============================================================================
@@ -662,7 +665,8 @@ drawThree:
 	li 	a2, 0x00000000	
 	jal	put_pixel
 
-	addi a3, a3, 1 	     	# a0 = a0 + 1
+	addi a3, a3, 1 	     	# next char from string
+	addi a5, a5, 8		# print next letter at x+8
 	b whileLoop		# go back to while loop
 	
 # ============================================================================
@@ -758,7 +762,8 @@ drawFour:
 	li 	a2, 0x00000000	
 	jal	put_pixel
 
-	addi a3, a3, 1 	     	# a0 = a0 + 1
+	addi a3, a3, 1 	     	# next char from string
+	addi a5, a5, 8		# print next letter at x+8
 	b whileLoop		# go back to while loop
 	
 # ============================================================================
@@ -859,7 +864,8 @@ drawFive:
 	li 	a2, 0x00000000	
 	jal	put_pixel
 
-	addi a3, a3, 1 	     	# a0 = a0 + 1
+	addi a3, a3, 1 	     	# next char from string
+	addi a5, a5, 8		# print next letter at x+8
 	b whileLoop		# go back to while loop
 	
 	# ============================================================================
@@ -970,9 +976,11 @@ drawSix:
 	li 	a2, 0x00000000	
 	jal	put_pixel
 
-	addi a3, a3, 1 	     	# a0 = a0 + 1
+	addi a3, a3, 1 	     	# next char from string
+	addi a5, a5, 8		# print next letter at x+8
 	b whileLoop		# go back to while loop
 	
+# ============================================================================
 drawSeven:
 # print 7	
 	li	a0, 1		# x
@@ -1075,9 +1083,11 @@ drawSeven:
 	li 	a2, 0x00000000	
 	jal	put_pixel
 
-	addi a3, a3, 1 	     	# a0 = a0 + 1
+	addi a3, a3, 1 	     	# next char from string
+	addi a5, a5, 8		# print next letter at x+8
 	b whileLoop		# go back to while loop
 
+# ============================================================================
 drawEight:
 # print 8	
 	li	a0, 1		# x
@@ -1200,9 +1210,11 @@ drawEight:
 	li 	a2, 0x00000000	
 	jal	put_pixel
 
-	addi a3, a3, 1 	     	# a0 = a0 + 1
+	addi a3, a3, 1 	     	# next char from string
+	addi a5, a5, 8		# print next letter at x+8
 	b whileLoop		# go back to while loop
 	
+# ============================================================================
 drawNine:
 # print 9	
 	li	a0, 1		# x
@@ -1310,9 +1322,11 @@ drawNine:
 	li 	a2, 0x00000000	
 	jal	put_pixel
 
-	addi a3, a3, 1 	     	# a0 = a0 + 1
+	addi a3, a3, 1 	     	# next char from string
+	addi a5, a5, 8		# print next letter at x+8
 	b whileLoop		# go back to while loop
 	
+# ============================================================================
 drawDot:
 # print .	
 	li	a0, 2		# x
@@ -1395,5 +1409,6 @@ drawDot:
 	li 	a2, 0x00000000	
 	jal	put_pixel
 
-	addi a3, a3, 1 	     	# a0 = a0 + 1
+	addi a3, a3, 1 	     	# next char from string
+	addi a5, a5, 8		# print next letter at x+8
 	b whileLoop		# go back to while loop
