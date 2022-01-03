@@ -45,7 +45,7 @@ main:
 	la a0, msg2		
 	ecall
 	
-	# read the input2
+	# read the starting integer x position
 	li a7, 5		
 	ecall
 	mv a5, a0
@@ -55,13 +55,13 @@ main:
 	la a0, msg3		
 	ecall
 	
-	# read the input3
+	# read the starting integer y position
 	li a7, 5		    		
 	ecall
 	mv a6, a0
 	
 	# go to loop throught input1 string
-    	la a3, input1		# address of the buffer
+    	la a3, input1		
     	j goToLoop
 
 saveAndExit:
@@ -147,6 +147,7 @@ put_pixel:
 	
 	add a0, a0, a5
 	add a1, a1, a6
+	
 	# pixel address calculation
 	li t4,BYTES_PER_ROW
 	mul t1, a1, t4 		# t1= y*BYTES_PER_ROW
@@ -198,7 +199,9 @@ whileLoop:
     beq t5, s0, drawNine
     li s0, '.'
     beq t5, s0, drawDot
-    addi a3, a3, 1 	     	# a0 = a0 + 1
+    
+    addi a3, a3, 1 	     	# a3 = a3 + 1
+    
     b whileLoop
     
 pastWhile:
