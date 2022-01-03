@@ -48,10 +48,9 @@ main:
 	ecall
 	
 	# read the input2
-	li a7, 8		
-	la a0, input2		    
-	li a1, 80		
+	li a7, 5		
 	ecall
+	mv a5, a0
 	
 	# display the msg3
 	li a7, 4		
@@ -59,10 +58,9 @@ main:
 	ecall
 	
 	# read the input3
-	li a7, 8		
-	la a0, input3		    
-	li a1, 80		
+	li a7, 5		    		
 	ecall
+	mv a6, a0
 	
 	# go to loop throught input1 string
     	la a3, input1		# address of the buffer
@@ -149,6 +147,8 @@ put_pixel:
 	la t1, image		# adress of bitmap
 	add t2, t1, t2		# adress of pixel array in $t2
 	
+	add a0, a0, a5
+	add a1, a1, a6
 	# pixel address calculation
 	li t4,BYTES_PER_ROW
 	mul t1, a1, t4 		# t1= y*BYTES_PER_ROW
