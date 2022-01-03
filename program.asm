@@ -19,8 +19,6 @@
 	outFileName: .asciz "dest.bmp"
 	image: .space BMP_FILE_SIZE
 	input1: .space 80
-	input2: .space 80
-	input3: .space 80
 	msg1: .asciz "\nInput message to print (numbers and dots are allowed, other symbols will be ignored): "
 	msg2: .asciz "\nInput starting x (only integer allowed): "
 	msg3: .asciz "\nInput starting y (only integer allowed): "
