@@ -21,9 +21,9 @@
 	input1: .space 80
 	input2: .space 80
 	input3: .space 80
-	msg1: .asciz "\nOnly numbers and dots are allowed. Other symbols will be ignored!\nInput message to print: "
-	msg2: .asciz "\nInput starting x: "
-	msg3: .asciz "\nInput starting y: "
+	msg1: .asciz "\nInput message to print (numbers and dots are allowed, other symbols will be ignored): "
+	msg2: .asciz "\nInput starting x (only integer allowed): "
+	msg3: .asciz "\nInput starting y (only integer allowed): "
 
 .text
 
@@ -550,18 +550,8 @@ drawThree:
 	li 	a2, 0x00000000	
 	jal	put_pixel
 	
-	li	a0, 5		
-	li	a1, 1		
-	li 	a2, 0x00000000	
-	jal	put_pixel
-	
 	li	a0, 6		
 	li	a1, 1		
-	li 	a2, 0x00000000	
-	jal	put_pixel
-	
-	li	a0, 5		
-	li	a1, 2		
 	li 	a2, 0x00000000	
 	jal	put_pixel
 	
@@ -620,18 +610,8 @@ drawThree:
 	li 	a2, 0x00000000	
 	jal	put_pixel
 	
-	li	a0, 5		
-	li	a1, 5		
-	li 	a2, 0x00000000	
-	jal	put_pixel
-	
 	li	a0, 6		
 	li	a1, 5		
-	li 	a2, 0x00000000	
-	jal	put_pixel
-	
-	li	a0, 5		
-	li	a1, 6		
 	li 	a2, 0x00000000	
 	jal	put_pixel
 	
