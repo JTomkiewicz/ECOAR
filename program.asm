@@ -12,12 +12,12 @@
 
 .data 
 
-	res:	.space 2
+	res: .space 2
 	inFileName: .asciz "source.bmp"
 	outFileName: .asciz "dest.bmp"
 	image: .space BMP_FILE_SIZE
 	input1: .space 80
-	msg1: .asciz "\nInput message to print (numbers and dots are be printed, other symbols will be ignored): "
+	msg1: .asciz "\nInput message to print (only numbers and dots are printed, other symbols will be ignored): "
 	msg2: .asciz "\nInput starting x (only integer allowed): "
 	msg3: .asciz "\nInput starting y (only integer allowed): "
 
@@ -73,7 +73,7 @@ exit:	li 	a7,10		# terminate program
 
 # ============================================================================
 read_bmp:
-# description: read content of a bmp file into memory
+# description: read content of bmp file into memory
 # arguments: none
 # return: none
 	addi sp, sp, -4		
@@ -105,7 +105,7 @@ read_bmp:
 
 # ============================================================================
 save_bmp:
-# description: saves bmp file from memory to a bmp file
+# description: saves bmp file from memory to bmp file
 # arguments: none
 # return: none
 	addi sp, sp, -4		
@@ -137,7 +137,7 @@ save_bmp:
 # ============================================================================
 put_pixel:
 #description: set the color of given pixel
-#arguments: a0 (x coordinate), a1 (y coordinate), a2 (0RGB - pixel color)
+#arguments: a0 (x coordinate), a1 (y coordinate), a2 (0RGB pixel color)
 #return: none
 	la t1, image		# adress of file offset to pixel array
 	addi t1, t1, 10
