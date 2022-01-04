@@ -47,6 +47,7 @@ main:
 	# read starting integer (x position)
 	li a7, 5		# system call for read_int
 	ecall
+	
 	mv a5, a0		# store int in a5
 	
 	# display msg3
@@ -57,6 +58,7 @@ main:
 	# read starting integer (y position)
 	li a7, 5		    		
 	ecall
+	
 	mv a6, a0		# store int in a6
 	
 	# go to loop throught input1 string
@@ -75,14 +77,15 @@ read_bmp:
 # description: read content of a bmp file into memory
 # arguments: none
 # return: none
-	addi sp, sp, -4		# push $s1
+	addi sp, sp, -4		
 	sw s1, 0(sp)
 	
 	# open file
 	li a7, 1024
         la a0, inFileName	# file name 
-        li a1, 0		# flags: 0-read file
+        li a1, 0		# flag 0 (read file)
         ecall
+        
 	mv s1, a0      		# save the file descriptor
 
 	# read file
@@ -97,7 +100,7 @@ read_bmp:
 	mv a0, s1
         ecall
 	
-	lw s1, 0(sp)		# restore (pop) s1
+	lw s1, 0(sp)		# restore (pop)
 	addi sp, sp, 4
 	jr ra
 
@@ -106,13 +109,13 @@ save_bmp:
 # description: saves bmp file from memory to a bmp file
 # arguments: none
 # return: none
-	addi sp, sp, -4		# push s1
+	addi sp, sp, -4		
 	sw s1, (sp)
 	
 	# open file
 	li a7, 1024
         la a0, outFileName	# file name 
-        li a1, 1		# flags: 1-write file
+        li a1, 1		# flag 1 (write file)
         ecall
 	mv s1, a0      		# save the file descriptor
 
@@ -128,7 +131,7 @@ save_bmp:
 	mv a0, s1
         ecall
 	
-	lw s1, (sp)		# restore (pop) $s1
+	lw s1, (sp)		# restore (pop)
 	addi sp, sp, 4
 	jr ra
 
@@ -137,31 +140,30 @@ put_pixel:
 #description: set the color of given pixel
 #arguments: a0 (x coordinate), a1 (y coordinate), a2 (0RGB - pixel color)
 #return: none
-
 	la t1, image		# adress of file offset to pixel array
-	addi t1,t1,10
-	lw t2, (t1)		# file offset to pixel array in $t2
+	addi t1, t1, 10
+	lw t2, (t1)		# file offset to pixel array in t2
 	la t1, image		# adress of bitmap
-	add t2, t1, t2		# adress of pixel array in $t2
+	add t2, t1, t2		# adress of pixel array in t2
 	
-	add a0, a0, a5
-	add a1, a1, a6
+	add a0, a0, a5		# !IMPORTANT draw at position x saved in a5
+	add a1, a1, a6		# !IMPORTANT draw at position y saved in a6
 	
 	# pixel address calculation
-	li t4,BYTES_PER_ROW
-	mul t1, a1, t4 		# t1= y*BYTES_PER_ROW
+	li t4, BYTES_PER_ROW
+	mul t1, a1, t4 		# t1= y * BYTES_PER_ROW
 	mv t3, a0		
 	slli a0, a0, 1
-	add t3, t3, a0		# $t3= 3*x
-	add t1, t1, t3		# $t1 = 3x + y*BYTES_PER_ROW
+	add t3, t3, a0		# t3 = 3 * x
+	add t1, t1, t3		# t1 = 3x + y * BYTES_PER_ROW
 	add t2, t2, t1		# pixel address 
 	
 	# set new color
-	sb a2,(t2)		# store B
-	srli a2,a2,8
-	sb a2,1(t2)		# store G
-	srli a2,a2,8
-	sb a2,2(t2)		# store R
+	sb a2, (t2)		# store B
+	srli a2, a2, 8
+	sb a2, 1(t2)		# store G
+	srli a2, a2, 8
+	sb a2, 2(t2)		# store R
 
 	jr ra
 	
