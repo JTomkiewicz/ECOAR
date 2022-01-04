@@ -12,7 +12,6 @@
 
 .data 
 
-	.align 4
 	res:	.space 2
 	inFileName: .asciz "source.bmp"
 	outFileName: .asciz "dest.bmp"
