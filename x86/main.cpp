@@ -2,14 +2,17 @@
 #include <iostream>
 #include <string>
 
-// structure that stores information about image
+// structure that stores information about bmp image
 struct image
 {
   int size;     // image size
+  int imgSize;  // image size minus header (54)
   int height;   // image heigth
   int width;    // image width
   int lineSize; // line size IN BYTES
-  char *pImg;
+
+  unsigned char header[54];
+  unsigned char *img;
 };
 
 // read from bmp file
@@ -18,29 +21,62 @@ image *readBmp(const char *fileName)
   // create new image struct
   image *img;
   // FILE pointer
-  FILE *pFile;
+  FILE *file;
 
   // rb stands for read binary
-  pFile = fopen(fileName, "rb");
+  file = fopen(fileName, "rb");
 
-  // when file opened succesfully
-  if (pFile != NULL)
-  {
-    fclose(pFile);
-
-    return img;
-  }
-  else
-  {
+  // when opening fails
+  if (file == NULL)
     return NULL;
-  }
+
+  // read first 54 bytes (this is header)
+  fread(img->header, sizeof(unsigned char), 54, file);
+
+  // set width and height
+  img->width = *(int *)&img->header[18];
+  img->height = *(int *)&img->header[22];
+
+  // bytes per row = 3 bytes * width
+  img->lineSize = 3 * img->width;
+
+  // data size is 3 * width * height
+  img->imgSize = 3 * img->width * img->height;
+
+  // whole size is data + header
+  img->size = img->imgSize + 54;
+
+  // read rest of bytes
+  fread(img->img, sizeof(unsigned char), img->imgSize, file);
+
+  // close file
+  fclose(file);
+
+  return img;
 }
 
 // save to bmp file
-int saveBmp(const char *fileName, const image *imgToSave)
+int saveBmp(const char *fileName, const image *img)
 {
+  // FILE pointer
+  FILE *file;
 
-  // return true if success
+  // wb stands for write binary
+  file = fopen(fileName, "wb");
+
+  // when opening fails
+  if (file == NULL)
+    return 1;
+
+  // write header
+  fwrite(img->header, sizeof(unsigned char), 54, file);
+
+  // write data
+  fwrite(img->img, sizeof(unsigned char), img->imgSize, file);
+
+  // close file
+  fclose(file);
+
   return 0;
 }
 
@@ -129,7 +165,8 @@ int main(void)
     // run func.asm
     func(srcImg, numbersImg, startX, startY, numberX);
 
-    startX += 8; // after printing move 8 bits right
+    // after printing move 8 bits right
+    startX += 8;
 
     // look if x is outside boundaries
     if (startX >= 320)
