@@ -45,7 +45,7 @@ int saveBmp(const char *fileName, const image *imgToSave)
 }
 
 // check if message to print contains only numbers and dots
-bool isCorrect(std::string msg)
+bool isCorrect(const std::string msg)
 {
   for (int i = 0; i < msg.length(); i++)
   {
@@ -56,21 +56,50 @@ bool isCorrect(std::string msg)
   return true;
 }
 
-extern "C" int func(image *sourceImg, image *numbersImg, image *destImg, std::string inputText);
+int calculateX(const char letter)
+{
+  switch (letter)
+  {
+  case '0':
+    return 0;
+  case '1':
+    return 8;
+  case '2':
+    return 16;
+  case '3':
+    return 24;
+  case '4':
+    return 32;
+  case '5':
+    return 40;
+  case '6':
+    return 48;
+  case '7':
+    return 56;
+  case '8':
+    return 64;
+  case '9':
+    return 72;
+  case '.':
+    return 80;
+  default:
+    return 0;
+  }
+}
+
+extern "C" void func(image *srcImg, image *numbersImg, int startX, int startY, int numberX);
 
 int main(void)
 {
   // read source
-  image *sourceImg = readBmp("source.bmp");
+  image *srcImg = readBmp("source.bmp");
   // read numbers
   image *numbersImg = readBmp("numbers.bmp");
-  // read dest
-  image *destImg = readBmp("dest.bmp");
 
   // check if files opened
-  if (sourceImg == NULL || numbersImg == NULL || destImg == NULL)
+  if (srcImg == NULL || numbersImg == NULL)
   {
-    std::cout << "Error while reading bmp fules!\n";
+    std::cout << "Error while reading bmp files!\n";
     return 1;
   }
 
@@ -80,25 +109,35 @@ int main(void)
   while (!isCorrect(message))
     std::cin >> message;
 
-  std::cout << "Input starting x (must be in [0, 320]):\n";
-  int x;
-  while (x < 0 || x > 320)
-    std::cin >> x;
+  std::cout << "Input starting x (must be in [0, 312]):\n";
+  int startX;
+  while (startX < 0 || startX > 312)
+    std::cin >> startX;
 
-  std::cout << "Input starting y (must be in [0, 240]):\n";
-  int y;
-  while (y < 0 || y > 240)
-    std::cin >> y;
+  std::cout << "Input starting y (must be in [0, 232]):\n";
+  int startY;
+  while (startY < 0 || startY > 232)
+    std::cin >> startY;
 
-  // run func.asm
-  if (func(sourceImg, numbersImg, destImg, message) != 0)
+  int numberX = 0;
+  // loop through string
+  for (int i = 0; i < message.length(); i++)
   {
-    std::cout << "Error in func.asm!\n";
-    return 1;
+    // x position of letter to print
+    numberX = calculateX(message[i]);
+
+    // run func.asm
+    func(srcImg, numbersImg, startX, startY, numberX);
+
+    startX += 8; // after printing move 8 bits right
+
+    // look if x is outside boundaries
+    if (startX >= 320)
+      break;
   }
 
   // save image
-  if (saveBmp("dest.bmp", destImg) != 0)
+  if (saveBmp("dest.bmp", srcImg) != 0)
   {
     std::cout << "Error in saveBmp function!\n";
     return 1;
