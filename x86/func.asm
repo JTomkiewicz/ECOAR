@@ -1,12 +1,11 @@
-;=====================================================================
-; ECOAR - example Intel x86 assembly program
+; ============================================================================
 ;
-; Author:      Zbigniew Szymanski
-; Date:        2016-03-16
-; Description: Function converts first character to an 'w'.
-;              int func(char *a);
+; Jakub Tomkiewicz
+; Index: 300183
 ;
-;=====================================================================
+; x86-32 Project No. 21 Adding Text
+;
+; ============================================================================
 
 section	.text
 global  func
