@@ -18,30 +18,3 @@ func:
 	mov	eax, 0			;return 0
 	pop	ebp
 	ret
-
-;============================================
-; THE STACK
-;============================================
-;
-; larger addresses
-; 
-;  |                               |
-;  | ...                           |
-;  ---------------------------------
-;  | function parameter - char *a  | EBP+8
-;  ---------------------------------
-;  | return address                | EBP+4
-;  ---------------------------------
-;  | saved ebp                     | EBP, ESP
-;  ---------------------------------
-;  | ... here local variables      | EBP-x
-;  |     when needed               |
-;
-; \/                              \/
-; \/ the stack grows in this      \/
-; \/ direction                    \/
-;
-; lower addresses
-;
-;
-;============================================
