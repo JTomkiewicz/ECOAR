@@ -2,6 +2,15 @@
 #include <iostream>
 #include <string>
 
+// ============================================================================
+//
+// Jakub Tomkiewicz
+// Index: 300183
+//
+// x86-32 Project No. 21 Adding Text
+//
+// ============================================================================
+
 // structure that stores information about bmp image
 struct image
 {
@@ -123,6 +132,39 @@ int calculateX(const char letter)
   }
 }
 
+void printLetter(image *srcImg, image *numbersImg, int startX, int startY, int numberX)
+{
+  // pointers for both src and numbers imgs
+  unsigned char *pSrc = srcImg->img;
+  unsigned char *pNumbers = numbersImg->img;
+
+  // go to the beginning of letter in numbersImg
+  pNumbers += numberX * 3;
+
+  // go to the place in scrImg
+  pSrc += startY * srcImg->lineSize;
+  pSrc += startX * 3;
+
+  for (int i = 0; i < 8; i++)
+  {
+    for (int j = 0; j < 8; j++)
+    {
+      for (int k = 0; k < 3; k++)
+      {
+        // move from number to src
+        *pSrc = *pNumbers;
+
+        // increase pointers
+        pSrc++;
+        pNumbers++;
+      }
+    }
+
+    pNumbers += 240;
+    pSrc += 936;
+  }
+}
+
 extern "C" void func(image *srcImg, image *numbersImg, int startX, int startY, int numberX);
 
 int main(void)
@@ -142,18 +184,24 @@ int main(void)
   // read message & starting coordinates x, y
   std::string message;
   std::cout << "Input message to print (only numbers and dots):\n";
-  while (!isCorrect(message))
+  do
+  {
     std::cin >> message;
+  } while (!isCorrect(message));
 
   std::cout << "Input starting x (must be in [0, 312]):\n";
   int startX;
-  while (startX < 0 || startX > 312)
+  do
+  {
     std::cin >> startX;
+  } while (startX < 0 || startX > 312);
 
   std::cout << "Input starting y (must be in [0, 232]):\n";
   int startY;
-  while (startY < 0 || startY > 232)
+  do
+  {
     std::cin >> startY;
+  } while (startY < 0 || startY > 232);
 
   int numberX = 0;
   // loop through string
@@ -163,7 +211,10 @@ int main(void)
     numberX = calculateX(message[i]);
 
     // run func.asm
-    func(srcImg, numbersImg, startX, startY, numberX);
+    func(numbersImg, srcImg, startX, startY, numberX);
+
+    // printLetter written in C++
+    // printLetter(numbersImg, srcImg, startX, startY, numberX);
 
     // after printing move 8 bits right
     startX += 8;

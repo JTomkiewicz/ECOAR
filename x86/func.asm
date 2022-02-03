@@ -1,11 +1,13 @@
-; ============================================================================
+; ========================================
 ;
 ; Jakub Tomkiewicz
 ; Index: 300183
 ;
 ; x86-32 Project No. 21 Adding Text
 ;
-; ============================================================================
+; ========================================
+
+; void func(image *srcImg, image *numbersImg, int startX, int startY, int numberX)
 
 section	.text
 global  func
@@ -13,8 +15,17 @@ global  func
 func:
 	push	ebp
 	mov	ebp, esp
-	mov	eax, DWORD [ebp+8]	;address of *a to eax
-	mov	BYTE [eax], 'w'		;a[0]='w'
-	mov	eax, 0			;return 0
+
+; copy number from numbersImg at location [numberX, 0]
+mov eax, [ebp + 8] ; eax is address of the struct numbersImg 
+
+; paste copied number into srcImg at location [startX, startY]
+mov eax, [ebp + 12] ; eax is address of the struct srcImg
+
+mov eax, [ebp + 16] ; eax is address of the int startX
+mov eax, [ebp + 20] ; eax is address of the int startY
+mov eax, [ebp + 24] ; eax is address of the int numbersX
+
+exit:
 	pop	ebp
 	ret
