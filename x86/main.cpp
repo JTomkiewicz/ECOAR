@@ -195,6 +195,8 @@ int main(void)
     return 1;
   }
 
+  std::cout << "BMP file opening successfull\n";
+
   // read message & starting coordinates x, y
   std::string message;
   std::cout << "Input message to print (only numbers and dots):\n";
@@ -220,6 +222,8 @@ int main(void)
     if (startY < 0 || startY > 232)
       std::cout << "Number must be in [0, 323]. Try again!:\n";
   } while (startY < 0 || startY > 232);
+
+  std::cout << "All inputs are correct. Starting printing\n";
 
   int numberX = 0;
   // loop through string
@@ -252,9 +256,13 @@ int main(void)
     return 1;
   }
 
+  std::cout << "BMP file saving successfull\n";
+
   // deallocate images
   deallocate(srcImg);
   deallocate(numbersImg);
+
+  std::cout << "Deallocation successfull\n";
 
   // exit program
   return 0;
