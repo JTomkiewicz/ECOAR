@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+#include <stdlib.h>
 
 // ============================================================================
 //
@@ -40,7 +41,7 @@ image *readBmp(const char *fileName)
     return NULL;
 
   // read first 54 bytes (this is header)
-  fread(img->header, sizeof(unsigned char), 54, file);
+  fread(img->header, 1, sizeof(54), file);
 
   // set width and height
   img->width = *(int *)&img->header[18];
@@ -95,7 +96,10 @@ bool isCorrect(const std::string msg)
   for (int i = 0; i < msg.length(); i++)
   {
     if ((msg[i] < '0' || msg[i] > '9') && msg[i] != '.')
+    {
+      std::cout << "Only numbers and dots are allowed. Try again!\n";
       return false;
+    }
   }
 
   return true;
@@ -165,6 +169,13 @@ void printLetter(image *srcImg, image *numbersImg, int startX, int startY, int n
   }
 }
 
+void deallocate(image *img)
+{
+  free(img->img);
+  free(img->header);
+  free(img);
+}
+
 extern "C" void func(image *srcImg, image *numbersImg, int startX, int startY, int numberX);
 
 int main(void)
@@ -178,6 +189,9 @@ int main(void)
   if (srcImg == NULL || numbersImg == NULL)
   {
     std::cout << "Error while reading bmp files!\n";
+    deallocate(srcImg);
+    deallocate(numbersImg);
+
     return 1;
   }
 
@@ -194,6 +208,8 @@ int main(void)
   do
   {
     std::cin >> startX;
+    if (startX < 0 || startX > 312)
+      std::cout << "Number must be in [0, 312]. Try again!:\n";
   } while (startX < 0 || startX > 312);
 
   std::cout << "Input starting y (must be in [0, 232]):\n";
@@ -201,6 +217,8 @@ int main(void)
   do
   {
     std::cin >> startY;
+    if (startY < 0 || startY > 232)
+      std::cout << "Number must be in [0, 323]. Try again!:\n";
   } while (startY < 0 || startY > 232);
 
   int numberX = 0;
@@ -228,12 +246,15 @@ int main(void)
   if (saveBmp("dest.bmp", srcImg) != 0)
   {
     std::cout << "Error in saveBmp function!\n";
+    deallocate(srcImg);
+    deallocate(numbersImg);
+
     return 1;
   }
 
   // deallocate images
-  free(srcImg);
-  free(numbersImg);
+  deallocate(srcImg);
+  deallocate(numbersImg);
 
   // exit program
   return 0;
