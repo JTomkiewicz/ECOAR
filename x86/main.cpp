@@ -211,10 +211,10 @@ int main(void)
     numberX = calculateX(message[i]);
 
     // run func.asm
-    func(numbersImg, srcImg, startX, startY, numberX);
+    // func(numbersImg, srcImg, startX, startY, numberX);
 
     // printLetter written in C++
-    // printLetter(numbersImg, srcImg, startX, startY, numberX);
+    printLetter(numbersImg, srcImg, startX, startY, numberX);
 
     // after printing move 8 bits right
     startX += 8;
