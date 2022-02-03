@@ -28,7 +28,7 @@ struct image
 image *readBmp(const char *fileName)
 {
   // create new image struct
-  image *img;
+  image *img = (image *)malloc(sizeof(image));
   // FILE pointer
   FILE *file;
 
@@ -230,6 +230,10 @@ int main(void)
     std::cout << "Error in saveBmp function!\n";
     return 1;
   }
+
+  // deallocate images
+  free(srcImg);
+  free(numbersImg);
 
   // exit program
   return 0;
