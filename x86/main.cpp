@@ -13,15 +13,14 @@
 // ============================================================================
 
 // structure that stores information about bmp image
-struct image
+typedef struct image
 {
-  int size;     // image size
-  int imgSize;  // image size minus header (54)
-  int height;   // image heigth
-  int width;    // image width
-  int lineSize; // line size IN BYTES
+  unsigned int size;     // image size minus header (54)
+  unsigned int height;   // image heigth
+  unsigned int width;    // image width
+  unsigned int lineSize; // line size IN BYTES
 
-  unsigned char header[54];
+  unsigned char *header;
   unsigned char *img;
 };
 
@@ -30,34 +29,41 @@ image *readBmp(const char *fileName)
 {
   // create new image struct
   image *img = (image *)malloc(sizeof(image));
-  // FILE pointer
-  FILE *file;
+  img->header = NULL;
+  img->img = NULL;
+  img->size = 0;
+  img->height = 0;
+  img->width = 0;
 
-  // rb stands for read binary
-  file = fopen(fileName, "rb");
+  // FILE pointer rb stands for read binary
+  FILE *file = fopen(fileName, "rb");
 
   // when opening fails
   if (file == NULL)
     return NULL;
 
+  img->header = new unsigned char[54];
+
   // read first 54 bytes (this is header)
-  fread(img->header, 1, sizeof(54), file);
+  fread(img->header, sizeof(unsigned char), 54, file);
 
   // set width and height
-  img->width = *(int *)&img->header[18];
-  img->height = *(int *)&img->header[22];
+  img->width = *(unsigned int *)&img->header[18];
+  img->height = *(unsigned int *)&img->header[22];
 
   // bytes per row = 3 bytes * width
   img->lineSize = 3 * img->width;
 
   // data size is 3 * width * height
-  img->imgSize = 3 * img->width * img->height;
+  img->size = 3 * img->width * img->height;
 
-  // whole size is data + header
-  img->size = img->imgSize + 54;
+  int rowPadding = (img->lineSize + 3) & (~3);
+
+  img->img = new unsigned char[rowPadding];
 
   // read rest of bytes
-  fread(img->img, sizeof(unsigned char), img->imgSize, file);
+  for (int i = 0; i < img->height; i++)
+    fread(img->img, sizeof(unsigned char), rowPadding, file);
 
   // close file
   fclose(file);
@@ -82,7 +88,7 @@ int saveBmp(const char *fileName, const image *img)
   fwrite(img->header, sizeof(unsigned char), 54, file);
 
   // write data
-  fwrite(img->img, sizeof(unsigned char), img->imgSize, file);
+  fwrite(img->img, sizeof(unsigned char), img->size, file);
 
   // close file
   fclose(file);
@@ -171,9 +177,19 @@ void printLetter(image *srcImg, image *numbersImg, int startX, int startY, int n
 
 void deallocate(image *img)
 {
-  free(img->img);
-  free(img->header);
-  free(img);
+  if (img && img->header && img->img)
+  {
+    // all uing set to 0
+    img->height = 0;
+    img->width = 0;
+    img->size = 0;
+    img->lineSize = 0;
+
+    // free
+    free(img->img);
+    free(img->header);
+    free(img);
+  }
 }
 
 extern "C" void func(image *srcImg, image *numbersImg, int startX, int startY, int numberX);
@@ -236,7 +252,7 @@ int main(void)
     // func(numbersImg, srcImg, startX, startY, numberX);
 
     // printLetter written in C++
-    printLetter(numbersImg, srcImg, startX, startY, numberX);
+    // printLetter(numbersImg, srcImg, startX, startY, numberX);
 
     // after printing move 8 bits right
     startX += 8;
