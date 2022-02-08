@@ -34,6 +34,7 @@ image *readBmp(const char *fileName)
   img->size = 0;
   img->height = 0;
   img->width = 0;
+  img->lineSize = 0;
 
   // FILE pointer rb stands for read binary
   FILE *file = fopen(fileName, "rb");
@@ -57,13 +58,9 @@ image *readBmp(const char *fileName)
   // data size is 3 * width * height
   img->size = 3 * img->width * img->height;
 
-  int rowPadding = (img->lineSize + 3) & (~3);
+  img->img = new unsigned char[img->size];
 
-  img->img = new unsigned char[rowPadding];
-
-  // read rest of bytes
-  for (int i = 0; i < img->height; i++)
-    fread(img->img, sizeof(unsigned char), rowPadding, file);
+  fread(img->img, sizeof(unsigned char), img->size, file);
 
   // close file
   fclose(file);
