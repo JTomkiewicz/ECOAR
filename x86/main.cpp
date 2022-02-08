@@ -186,7 +186,7 @@ void deallocate(image *img)
   }
 }
 
-extern "C" void func(image *srcImg, image *numbersImg, int startX, int startY, int numberX);
+extern "C" void func(image *numbersImg, image *srcImg, int startX, int startY, int numberX);
 
 int main(void)
 {
