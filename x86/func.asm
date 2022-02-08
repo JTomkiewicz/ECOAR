@@ -16,15 +16,34 @@ func:
 	push ebp
 	mov	ebp, esp
 
-; create pointers & place them in proper place
-setupPointers: 
+	; numbersImg pointer
+	mov esi, [ebp + 8] ; address of numbersImg struct
+
+	mov eax, 3
+	mov ebx, [esp + 12] ; numberX
+	imul eax, ebx ; startX * 3
+	add esi, eax ; pSrc += (startX * 3)
+
+	; scrImg pointer
+	mov edi, [ebp + 12] ; address of srcImg struct
+
+	mov eax, 960 ; srcImg -> lineSize
+	mov ebx, [esp + 8] ; startY
+	imul eax, ebx ; startY * srcImg -> lineSize
+	add edi, eax ; pSrc += (startY * srcImg -> lineSize)
+
+	mov eax, 3
+	mov ebx, [esp + 12] ; startX
+	imul eax, ebx ; startX * 3
+	add edi, eax ; pSrc += (startX * 3)
+
+	mov
 
 	mov eax, 0
 	mov [esp + 16], eax ; i = 0
 
 ; for (int i = 0; i < 8; i++)
 loopI:
-
 	mov eax, 8
 	cmp [esp + 16], eax ; i == 8
 	je afterLoopI
@@ -34,7 +53,6 @@ loopI:
 
 ; for (int j = 0; j < 24; j++)
 loopJ:
-
 	mov eax, 24
 	cmp [esp + 20], eax ; j == 24
 	je afterLoopJ
@@ -52,7 +70,6 @@ loopJ:
 
 ; when loopJ finishes, increment pScr and pNumbers
 afterLoopJ:
-
 	mov eax, 936 ; 960 - 24 (so line width - 3 * 8)
 	add esi, eax ; pNumbers += 936
 	add edi, eax ; pSrc += 936
