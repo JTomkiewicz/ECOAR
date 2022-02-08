@@ -139,36 +139,33 @@ int calculateX(const char letter)
   }
 }
 
-void printLetter(image *srcImg, image *numbersImg, int startX, int startY, int numberX)
+void printLetter(image *numbersImg, image *srcImg, int startX, int startY, int numberX)
 {
   // pointers for both src and numbers imgs
   unsigned char *pSrc = srcImg->img;
   unsigned char *pNumbers = numbersImg->img;
 
   // go to the beginning of letter in numbersImg
-  pNumbers += numberX * 3;
+  pNumbers += (numberX * 3);
 
   // go to the place in scrImg
-  pSrc += startY * srcImg->lineSize;
-  pSrc += startX * 3;
+  pSrc += (startY * srcImg->lineSize);
+  pSrc += (startX * 3);
 
   for (int i = 0; i < 8; i++)
   {
-    for (int j = 0; j < 8; j++)
+    for (int j = 0; j < 24; j++) // 24 = 8 * 3
     {
-      for (int k = 0; k < 3; k++)
-      {
-        // move from number to src
-        *pSrc = *pNumbers;
+      // move from number to src
+      *pSrc = *pNumbers;
 
-        // increase pointers
-        pSrc++;
-        pNumbers++;
-      }
+      // increase pointers
+      pSrc++;
+      pNumbers++;
     }
 
-    pNumbers += 240;
-    pSrc += 936;
+    pNumbers += (numbersImg->lineSize - 24);
+    pSrc += (srcImg->lineSize - 24);
   }
 }
 
@@ -249,7 +246,7 @@ int main(void)
     // func(numbersImg, srcImg, startX, startY, numberX);
 
     // printLetter written in C++
-    // printLetter(numbersImg, srcImg, startX, startY, numberX);
+    printLetter(numbersImg, srcImg, startX, startY, numberX);
 
     // after printing move 8 bits right
     startX += 8;
