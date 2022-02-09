@@ -13,7 +13,7 @@
 // ============================================================================
 
 // structure that stores information about bmp image
-typedef struct image
+struct image
 {
   unsigned char *img;
   unsigned char *header;
