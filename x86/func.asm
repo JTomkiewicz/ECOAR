@@ -22,7 +22,8 @@ func:
 	sub esp, 8 ; place for i and j (loop variables)
 
 	; numbersImg pointer
-	mov esi, [ebp + 8] ; address of numbersImg struct
+	mov eax, [ebp + 8] ; address of numbersImg struct
+	mov esi, [eax + 16] ; *img
 
 	mov eax, 3
 	mov ebx, [ebp + 24] ; numberX
@@ -30,7 +31,8 @@ func:
 	add esi, eax ; pNumbers += (numberX * 3)
 
 	; scrImg pointer
-	mov edi, [ebp + 12] ; address of srcImg struct
+	mov eax, [ebp + 12] ; address of srcImg struct
+	mov edi, [eax + 16] ; *img
 
 	mov eax, 960 ; srcImg -> lineSize
 	mov ebx, [ebp + 20] ; startY

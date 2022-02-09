@@ -15,13 +15,13 @@
 // structure that stores information about bmp image
 struct image
 {
-  unsigned char *img;
-  unsigned char *header;
-
   unsigned int size;     // image size minus header (54)
   unsigned int height;   // image heigth
   unsigned int width;    // image width
   unsigned int lineSize; // line size IN BYTES
+
+  unsigned char *img;
+  unsigned char *header;
 };
 
 // read from bmp file
