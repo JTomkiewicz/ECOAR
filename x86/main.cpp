@@ -15,13 +15,13 @@
 // structure that stores information about bmp image
 typedef struct image
 {
+  unsigned char *img;
+  unsigned char *header;
+
   unsigned int size;     // image size minus header (54)
   unsigned int height;   // image heigth
   unsigned int width;    // image width
   unsigned int lineSize; // line size IN BYTES
-
-  unsigned char *header;
-  unsigned char *img;
 };
 
 // read from bmp file
@@ -139,7 +139,7 @@ int calculateX(const char letter)
   }
 }
 
-void printLetter(image *numbersImg, image *srcImg, int startX, int startY, int numberX)
+void printLetter(image *numbersImg, image *srcImg, unsigned int startX, unsigned int startY, unsigned int numberX)
 {
   // pointers for both src and numbers imgs
   unsigned char *pSrc = srcImg->img;
@@ -186,7 +186,7 @@ void deallocate(image *img)
   }
 }
 
-extern "C" void func(image *numbersImg, image *srcImg, int startX, int startY, int numberX);
+extern "C" void func(image *numbersImg, image *srcImg, unsigned int startX, unsigned int startY, unsigned int numberX);
 
 int main(void)
 {
@@ -216,7 +216,7 @@ int main(void)
   } while (!isCorrect(message));
 
   std::cout << "Input starting x (must be in [0, 312]):\n";
-  int startX;
+  unsigned int startX;
   do
   {
     std::cin >> startX;
@@ -225,7 +225,7 @@ int main(void)
   } while (startX < 0 || startX > 312);
 
   std::cout << "Input starting y (must be in [0, 232]):\n";
-  int startY;
+  unsigned int startY;
   do
   {
     std::cin >> startY;
@@ -235,7 +235,7 @@ int main(void)
 
   std::cout << "All inputs are correct. Starting printing\n";
 
-  int numberX = 0;
+  unsigned int numberX = 0;
   // loop through string
   for (int i = 0; i < message.length(); i++)
   {
@@ -243,10 +243,10 @@ int main(void)
     numberX = calculateX(message[i]);
 
     // run func.asm
-    // func(numbersImg, srcImg, startX, startY, numberX);
+    func(numbersImg, srcImg, startX, startY, numberX);
 
     // printLetter written in C++
-    printLetter(numbersImg, srcImg, startX, startY, numberX);
+    // printLetter(numbersImg, srcImg, startX, startY, numberX);
 
     // after printing move 8 bits right
     startX += 8;
