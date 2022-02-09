@@ -26,8 +26,8 @@ func:
 
 	mov eax, 3
 	mov ebx, [ebp + 24] ; numberX
-	imul eax, ebx ; startX * 3
-	add esi, eax ; pSrc += (startX * 3)
+	imul eax, ebx ; numberX * 3
+	add esi, eax ; pNumbers += (numberX * 3)
 
 	; scrImg pointer
 	mov edi, [ebp + 12] ; address of srcImg struct
