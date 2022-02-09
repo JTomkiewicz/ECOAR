@@ -173,7 +173,7 @@ void deallocate(image *img)
 {
   if (img && img->header && img->img)
   {
-    // all uing set to 0
+    // all uint set to 0
     img->height = 0;
     img->width = 0;
     img->size = 0;

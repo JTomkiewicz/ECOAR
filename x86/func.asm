@@ -7,7 +7,7 @@
 ;
 ; ========================================
 
-; func(image *numbersImg, image *srcImg, int startX, int startY, int numberX)
+; func(image *numbersImg, image *srcImg, unsigned int startX, unsigned int startY, unsigned int numberX)
 
 section	.text
 global func
