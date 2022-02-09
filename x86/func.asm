@@ -19,13 +19,13 @@ func:
 	push edi
 	push esi
 
-	sub esp, 4 ; place for i and j (loop variables)
+	sub esp, 8 ; place for i and j (loop variables)
 
 	; numbersImg pointer
 	mov esi, [ebp + 8] ; address of numbersImg struct
 
 	mov eax, 3
-	mov ebx, [ebp + 20] ; numberX
+	mov ebx, [ebp + 24] ; numberX
 	imul eax, ebx ; startX * 3
 	add esi, eax ; pSrc += (startX * 3)
 
@@ -33,12 +33,12 @@ func:
 	mov edi, [ebp + 12] ; address of srcImg struct
 
 	mov eax, 960 ; srcImg -> lineSize
-	mov ebx, [ebp + 16] ; startY
+	mov ebx, [ebp + 20] ; startY
 	imul eax, ebx ; startY * srcImg -> lineSize
 	add edi, eax ; pSrc += (startY * srcImg -> lineSize)
 
 	mov eax, 3
-	mov ebx, [ebp + 12] ; startX
+	mov ebx, [ebp + 16] ; startX
 	imul eax, ebx ; startX * 3
 	add edi, eax ; pSrc += (startX * 3)
 
@@ -63,12 +63,12 @@ loopJ:
 	mov eax, [esi] ; eax = *pNumbers
 	mov [edi], eax ; *pSrc = eax
 
-	mov eax, 4
+	mov eax, 1
 	add esi, eax ; pNumbers++
 	add edi, eax ; pSrc++
 
 	mov eax, 1
-	add [esp + 4], eax ;j++
+	add [esp + 4], eax ; j++
 	jmp loopJ
 
 ; when loopJ finishes, increment pScr and pNumbers
@@ -78,7 +78,7 @@ afterLoopJ:
 	add edi, eax ; pSrc += 936
 
 	mov eax, 1
-	add [esp + 4], eax ;j++
+	add [esp + 0], eax ; i++
 	jmp loopI
 
 ; when loopI finishes, exit
