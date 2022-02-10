@@ -19,8 +19,6 @@ func:
 	push edi
 	push esi
 
-	sub esp, 8 ; place for i and j (loop variables)
-
 	; numbersImg pointer
 	mov eax, [ebp + 8] ; address of numbersImg struct
 	mov esi, [eax + 16] ; *img
@@ -43,21 +41,21 @@ func:
 	add edi, eax ; pSrc += (startX * 3)
 
 	mov eax, 0
-	mov [esp + 0], eax ; i = 0
+	mov ebx, eax ; i = 0
 
 ; for (int i = 0; i < 8; i++)
 loopI:
 	mov eax, 8
-	cmp [esp + 0], eax ; i == 8
+	cmp ebx, eax ; i == 8
 	je afterLoopI
 
 	mov eax, 0 
-	mov [esp + 4], eax ; j = 0
+	mov ecx, eax ; j = 0
 
 ; for (int j = 0; j < 24; j++)
 loopJ:
 	mov eax, 24
-	cmp [esp + 4], eax ; j == 24
+	cmp ecx, eax ; j == 24
 	je afterLoopJ
 
 	mov eax, [esi] ; eax = *pNumbers
@@ -68,7 +66,7 @@ loopJ:
 	add edi, eax ; pSrc++
 
 	mov eax, 1
-	add [esp + 4], eax ; j++
+	add ecx, eax ; j++
 	jmp loopJ
 
 ; when loopJ finishes, increment pScr and pNumbers
@@ -78,7 +76,7 @@ afterLoopJ:
 	add edi, eax ; pSrc += 936
 
 	mov eax, 1
-	add [esp + 0], eax ; i++
+	add ebx, eax ; i++
 	jmp loopI
 
 ; when loopI finishes, exit
