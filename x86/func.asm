@@ -32,6 +32,7 @@ func:
 	mov edi, [eax + 16] ; *img
 
 	mov eax, [eax + 12] ; srcImg -> lineSize
+	mov edx, eax ; keep lineSize for later, it will be usefull in loop
 	mov ebx, [ebp + 20] ; startY
 	imul eax, ebx ; startY * srcImg -> lineSize
 	add edi, eax ; pSrc += (startY * srcImg -> lineSize)
@@ -39,6 +40,8 @@ func:
 	mov eax, [ebp + 16] ; startX
 	lea eax, [2*eax + eax] ; startX * 3
 	add edi, eax ; pSrc += (startX * 3)
+
+	sub edx, 24 ; lineSize - 3 * 8
 
 	mov eax, 0
 	mov ebx, eax ; i = 0
@@ -71,9 +74,8 @@ loopJ:
 
 ; when loopJ finishes, increment pScr and pNumbers
 afterLoopJ:
-	mov eax, 936 ; 960 - 24 (so line width - 3 * 8)
-	add esi, eax ; pNumbers += 936
-	add edi, eax ; pSrc += 936
+	add esi, edx ; pNumbers += 936
+	add edi, edx ; pSrc += 936
 
 	mov eax, 1
 	add ebx, eax ; i++
