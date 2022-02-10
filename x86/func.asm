@@ -33,7 +33,7 @@ func:
 	mov eax, [ebp + 12] ; address of srcImg struct
 	mov edi, [eax + 16] ; *img
 
-	mov eax, 960 ; srcImg -> lineSize
+	mov eax, [eax + 12] ; srcImg -> lineSize
 	mov ebx, [ebp + 20] ; startY
 	imul eax, ebx ; startY * srcImg -> lineSize
 	add edi, eax ; pSrc += (startY * srcImg -> lineSize)
