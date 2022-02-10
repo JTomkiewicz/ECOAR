@@ -25,9 +25,8 @@ func:
 	mov eax, [ebp + 8] ; address of numbersImg struct
 	mov esi, [eax + 16] ; *img
 
-	mov eax, 3
-	mov ebx, [ebp + 24] ; numberX
-	imul eax, ebx ; numberX * 3
+	mov eax, [ebp + 24] ; numberX
+	lea eax, [2*eax + eax] ; numberX * 3
 	add esi, eax ; pNumbers += (numberX * 3)
 
 	; scrImg pointer
@@ -39,9 +38,8 @@ func:
 	imul eax, ebx ; startY * srcImg -> lineSize
 	add edi, eax ; pSrc += (startY * srcImg -> lineSize)
 
-	mov eax, 3
-	mov ebx, [ebp + 16] ; startX
-	imul eax, ebx ; startX * 3
+	mov eax, [ebp + 16] ; startX
+	lea eax, [2*eax + eax] ; startX * 3
 	add edi, eax ; pSrc += (startX * 3)
 
 	mov eax, 0
