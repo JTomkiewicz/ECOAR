@@ -53,8 +53,8 @@ loopI:
 
 ; for (int j = 23; j >= 0; j--)
 loopJ:
-	mov eax, [esi] ; eax = *pNumbers
-	mov [edi], eax ; *pSrc = eax
+	mov al, [esi] ; read byte from pNumbers
+	mov byte[edi], al ; put byte in pSrc
 
 	mov eax, 1
 	add esi, eax ; pNumbers++
