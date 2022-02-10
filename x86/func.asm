@@ -43,24 +43,16 @@ func:
 
 	sub edx, 24 ; lineSize - 3 * 8
 
-	mov eax, 0
-	mov ebx, eax ; i = 0
+	mov eax, 7
+	mov ebx, eax ; i = 7
 
-; for (int i = 0; i < 8; i++)
+; for (int i = 7; i >= 0; i--)
 loopI:
-	mov eax, 8
-	cmp ebx, eax ; i == 8
-	je afterLoopI
+	mov eax, 23 
+	mov ecx, eax ; j = 23
 
-	mov eax, 0 
-	mov ecx, eax ; j = 0
-
-; for (int j = 0; j < 24; j++)
+; for (int j = 23; j >= 0; j--)
 loopJ:
-	mov eax, 24
-	cmp ecx, eax ; j == 24
-	je afterLoopJ
-
 	mov eax, [esi] ; eax = *pNumbers
 	mov [edi], eax ; *pSrc = eax
 
@@ -68,8 +60,12 @@ loopJ:
 	add esi, eax ; pNumbers++
 	add edi, eax ; pSrc++
 
+	mov eax, 0
+	cmp ecx, eax ; j == 0
+	je afterLoopJ
+
 	mov eax, 1
-	add ecx, eax ; j++
+	sub ecx, eax ; j--
 	jmp loopJ
 
 ; when loopJ finishes, increment pScr and pNumbers
@@ -77,8 +73,12 @@ afterLoopJ:
 	add esi, edx ; pNumbers += 936
 	add edi, edx ; pSrc += 936
 
+	mov eax, 0
+	cmp ebx, eax ; i == 0
+	je afterLoopI
+
 	mov eax, 1
-	add ebx, eax ; i++
+	sub ebx, eax ; i--
 	jmp loopI
 
 ; when loopI finishes, exit
