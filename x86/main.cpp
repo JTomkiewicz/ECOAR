@@ -110,33 +110,17 @@ bool isCorrect(const std::string msg)
 
 int calculateX(const char letter)
 {
-  switch (letter)
+  // at this point we know that letter must be 0-9 or .
+
+  // when letter is 0-9, cast char to int and multiply by 8
+  if (letter >= '0' && letter <= '9')
   {
-  case '0':
-    return 0;
-  case '1':
-    return 8;
-  case '2':
-    return 16;
-  case '3':
-    return 24;
-  case '4':
-    return 32;
-  case '5':
-    return 40;
-  case '6':
-    return 48;
-  case '7':
-    return 56;
-  case '8':
-    return 64;
-  case '9':
-    return 72;
-  case '.':
-    return 80;
-  default:
-    return 0;
+    int letterInt = letter - '0';
+    return letterInt * 8;
   }
+
+  // if letter is NOT 0-9, it must be .
+  return 80;
 }
 
 void printLetter(image *numbersImg, image *srcImg, unsigned int startX, unsigned int startY, unsigned int numberX)
