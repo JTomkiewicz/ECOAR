@@ -1,5 +1,7 @@
 ## Description
 
+Computer architecture was the second most challenging subject for me during my engineering studies. The topics discussed covered how the computer works at the lowest level of abstraction, i.e., memory management, and how many bits are used by specific primitive data types. We had the opportunity to write two projects in assembly language during the course.
+
 ## Projects
 
 The task was to create a program in **RISC-V** and **x86** assembler that draws a single line of text (containing only numbers and dots) on the BMP image. Symbols were to be presented in 8x8 pixel matrix format. For example, number 1 looks as follows:
