@@ -21,3 +21,5 @@ There were three inputs:
 * starting coordinates x and y, where numbers have to be drawn
 
 Output was a 320x240px 24 bit RGB BMP file containing modified image.
+
+I created the RISC-V project using the RARS simulator, that is RISC-V Assembler and Runtime Simulator, and x86 project is a combination of C ++ with an assembler that has was compiled with the GCC compiler
